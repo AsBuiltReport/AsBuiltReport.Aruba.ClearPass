@@ -63,7 +63,7 @@ function Invoke-AsBuiltReport.Aruba.ClearPass {
                 Paragraph "The following section provides a summary of the implemented components on the Aruba ClearPass infrastructure."
                 BlankLine
                 if ($InfoLevel.System.PSObject.Properties.Value -ne 0) {
-                    #Get-AbrCPPMSystem
+                    Get-AbrCPPMSystem
                 }
             }
         } catch {
