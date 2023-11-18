@@ -18,7 +18,7 @@ function Invoke-AsBuiltReport.Aruba.ClearPass {
     # Do not remove or add to these parameters
     param (
         [String[]] $Target,
-        [PSCredential] $Credential
+        [string] $Token
     )
 
     Write-PScriboMessage -Plugin "Module" -Message "Please refer to the AsBuiltReport.Aruba.ClearPass GitHub website for more detailed information about this project."
@@ -51,8 +51,27 @@ function Invoke-AsBuiltReport.Aruba.ClearPass {
     #region foreach loop
     foreach ($System in $Target) {
 
+        try {
+            #Connection to ClearPass (TODO: Add Parameter for Certificate Check and Port)
+            Connect-ArubaCP -Server $System -token $token -SkipCertificateCheck -verbose
 
+            #Get Model
+            $name = (Get-ArubaCPServerConfiguration -verbose).name
+            Write-PScriboMessage "Connect to $System : $name"
 
+            Section -Style Heading1 "Implementation Report $name" {
+                Paragraph "The following section provides a summary of the implemented components on the Aruba ClearPass infrastructure."
+                BlankLine
+                if ($InfoLevel.System.PSObject.Properties.Value -ne 0) {
+                    #Get-AbrCPPMSystem
+                }
+            }
+        } catch {
+            Write-PScriboMessage -IsWarning $_.Exception.Message
+        }
+
+        #Disconnect
+        Disconnect-ArubaCP -Confirm:$false
     }
     #endregion foreach loop
 }
