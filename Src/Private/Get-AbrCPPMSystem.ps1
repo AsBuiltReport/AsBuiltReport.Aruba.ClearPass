@@ -26,6 +26,7 @@ function Get-AbrCPPMSystem {
     process {
 
         $version = Get-ArubaCPCPPMVersion
+        $configuration = Get-ArubaCPServerConfiguration
 
         if ($version -and $InfoLevel.System -ge 1) {
             Section -Style Heading2 'Version' {
@@ -47,6 +48,37 @@ function Get-AbrCPPMSystem {
                     Name = "Version"
                     List = $false
                     ColumnWidths = 20, 16, 16, 16, 16, 16
+                }
+
+                if ($Report.ShowTableCaptions) {
+                    $TableParams['Caption'] = "- $($TableParams.Name)"
+                }
+
+                $OutObj | Table @TableParams
+            }
+        }
+
+        if ($configuration -and $InfoLevel.System -ge 1) {
+            Section -Style Heading2 'Server Configuration' {
+                Paragraph "The following section details Server Configuration settings configured on ClearPass."
+                BlankLine
+
+                $OutObj = @()
+                $OutObj = [pscustomobject]@{
+                    "Name" = $configuration.name
+                    "DNS Name" = $configuration.server_dns_name
+                    "FQDN" = $configuration.fqdn
+                    "MGMT IP" = $configuration.management_ip
+                    "DATA IP" = $configuration.server_ip
+                    "Publisher" = $configuration.is_publisher
+                    "Insight" = $configuration.is_insight_enabled
+                    "Insight Primary" = $configuration.is_insight_primary
+                }
+
+                $TableParams = @{
+                    Name = "Server Configuration"
+                    List = $true
+                    ColumnWidths = 50, 50
                 }
 
                 if ($Report.ShowTableCaptions) {
