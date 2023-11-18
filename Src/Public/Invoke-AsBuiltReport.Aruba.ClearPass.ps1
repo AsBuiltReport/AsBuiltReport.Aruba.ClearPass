@@ -15,7 +15,7 @@ function Invoke-AsBuiltReport.Aruba.ClearPass {
         https://github.com/AsBuiltReport/AsBuiltReport.Aruba.ClearPass
     #>
 
-	# Do not remove or add to these parameters
+    # Do not remove or add to these parameters
     param (
         [String[]] $Target,
         [PSCredential] $Credential
@@ -46,13 +46,13 @@ function Invoke-AsBuiltReport.Aruba.ClearPass {
     # Used to set values to TitleCase where required
     $TextInfo = (Get-Culture).TextInfo
 
-	# Update/rename the $System variable and build out your code within the ForEach loop. The ForEach loop enables AsBuiltReport to generate an as built configuration against multiple defined targets.
+    # Update/rename the $System variable and build out your code within the ForEach loop. The ForEach loop enables AsBuiltReport to generate an as built configuration against multiple defined targets.
 
     #region foreach loop
     foreach ($System in $Target) {
 
 
 
-	}
-	#endregion foreach loop
+    }
+    #endregion foreach loop
 }
