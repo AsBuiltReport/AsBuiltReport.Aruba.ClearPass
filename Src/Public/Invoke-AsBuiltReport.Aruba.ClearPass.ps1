@@ -53,10 +53,10 @@ function Invoke-AsBuiltReport.Aruba.ClearPass {
 
         try {
             #Connection to ClearPass (TODO: Add Parameter for Certificate Check and Port)
-            Connect-ArubaCP -Server $System -token $token -SkipCertificateCheck -verbose
+            Connect-ArubaCP -Server $System -token $token -SkipCertificateCheck | Out-Null
 
             #Get Model
-            $name = (Get-ArubaCPServerConfiguration -verbose).name
+            $name = (Get-ArubaCPServerConfiguration).name
             Write-PScriboMessage "Connect to $System : $name"
 
             Section -Style Heading1 "Implementation Report $name" {
