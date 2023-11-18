@@ -26,9 +26,10 @@ function Get-AbrCPPMSystem {
     process {
 
         $version = Get-ArubaCPCPPMVersion
+        $server_version = Get-ArubaCPServerVersion
         $configuration = Get-ArubaCPServerConfiguration
 
-        if ($version -and $InfoLevel.System -ge 1) {
+        if ($version -and $server_version -and $InfoLevel.System -ge 1) {
             Section -Style Heading2 'Version' {
                 Paragraph "The following section details Version settings configured on ClearPass."
                 BlankLine
@@ -48,6 +49,31 @@ function Get-AbrCPPMSystem {
                     Name = "Version"
                     List = $false
                     ColumnWidths = 20, 16, 16, 16, 16, 16
+                }
+
+                if ($Report.ShowTableCaptions) {
+                    $TableParams['Caption'] = "- $($TableParams.Name)"
+                }
+
+                $OutObj | Table @TableParams
+
+                Paragraph "The following section details Patches settings configured on ClearPass."
+                BlankLine
+
+                $OutObj = @()
+                foreach ($patches in $server_version.installed_patches) {
+                    $OutObj += [pscustomobject]@{
+                        "Name" = $patches.name
+                        #"Description" = $patches.description
+                        "Date" = $patches.installed
+                    }
+                }
+
+                $TableParams = @{
+                    Name = "Patches"
+                    List = $false
+                    ColumnWidths = 50, 50
+                    #ColumnWidths = 25, 50, 25
                 }
 
                 if ($Report.ShowTableCaptions) {
