@@ -35,7 +35,7 @@ function Get-AbrCPPMSystem {
                 BlankLine
 
                 $OutObj = @()
-                $app = $version.app_major_version + "." + $version.app_minor_version + ". " + $version.app_service_release
+                $app = $version.app_major_version + "." + $version.app_minor_version + "." + $version.app_service_release
                 $OutObj = [pscustomobject]@{
                     "Version" = $app
                     "Build" = $version.app_build_number
