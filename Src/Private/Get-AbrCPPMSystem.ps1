@@ -90,21 +90,22 @@ function Get-AbrCPPMSystem {
                 BlankLine
 
                 $OutObj = @()
-                $OutObj = [pscustomobject]@{
-                    "Name" = $configuration.name
-                    "DNS Name" = $configuration.server_dns_name
-                    "FQDN" = $configuration.fqdn
-                    "MGMT IP" = $configuration.management_ip
-                    "DATA IP" = $configuration.server_ip
-                    "Publisher" = $configuration.is_publisher
-                    "Insight" = $configuration.is_insight_enabled
-                    "Insight Primary" = $configuration.is_insight_primary
+                foreach ($conf in $configuration) {
+                    $OutObj += [pscustomobject]@{
+                        "Name" = $conf.name
+                        "DNS Name" = $conf.server_dns_name
+                        #"FQDN" = $conf.fqdn
+                        "MGMT IP" = $conf.management_ip
+                        "DATA IP" = $conf.server_ip
+                        "Publisher" = $conf.is_publisher
+                        "Insight (Primary)" = "$($conf.is_insight_enabled) ($($conf.is_insight_primary))"
+                    }
                 }
 
                 $TableParams = @{
                     Name = "Server Configuration"
-                    List = $true
-                    ColumnWidths = 50, 50
+                    List = $false
+                    ColumnWidths = 20, 20, 16, 16, 12, 16
                 }
 
                 if ($Report.ShowTableCaptions) {
