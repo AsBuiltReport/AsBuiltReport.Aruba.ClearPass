@@ -65,6 +65,9 @@ function Invoke-AsBuiltReport.Aruba.ClearPass {
                 if ($InfoLevel.System.PSObject.Properties.Value -ne 0) {
                     Get-AbrCPPMSystem
                 }
+                if ($InfoLevel.License.PSObject.Properties.Value -ne 0) {
+                    Get-AbrCPPMLicense
+                }
             }
         } catch {
             Write-PScriboMessage -IsWarning $_.Exception.Message
