@@ -29,9 +29,9 @@ function Get-AbrCPPMService {
             Paragraph "The following section details Service settings configured on FortiGate."
             BlankLine
 
-            $service = Get-ArubaCPService | Sort-Object order_no
-            $enf_policy = (Invoke-ArubaCPRestMethod "api/enforcement-policy")._embedded.items
-            $enf_profile = (Invoke-ArubaCPRestMethod "api/enforcement-profile")._embedded.items
+            $service = Get-ArubaCPService -limit 1000 | Sort-Object order_no
+            $enf_policy = (Invoke-ArubaCPRestMethod "api/enforcement-policy" -limit 1000)._embedded.items
+            $enf_profile = (Invoke-ArubaCPRestMethod "api/enforcement-profile" -limit 1000)._embedded.items
 
             if ($service -and $InfoLevel.Service -ge 1) {
                 Section -Style Heading3 'Summary' {
