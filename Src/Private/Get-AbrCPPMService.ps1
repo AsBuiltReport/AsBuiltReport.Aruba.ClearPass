@@ -38,11 +38,25 @@ function Get-AbrCPPMService {
                     Paragraph "The following section details Settings Summary configured on ClearPass."
                     BlankLine
 
+                    #Service, Enforcement (policy or profile) start with [ is configured by default (factory) on Clearpass
+                    $service_count = @($Service).count
+                    $service_count_default = @($service | Where-Object {$_.name -like '`[*' }).Count
+
+                    $service_count_enabled = @($Service | Where-Object {$_.enabled -eq 'true' }).count
+                    $service_count_enabled_default = @($service | Where-Object {$_.name -like '`[*' -and $_.enabled -eq 'true'}).Count
+
+                    $enf_policy_count = @($enf_policy).count
+                    $enf_policy_count_default = @($enf_policy | Where-Object {$_.name -like '`[*' }).count
+
+                    $enf_profile_count = @($enf_profile).count
+                    $enf_profile_count_default = @($enf_profile | Where-Object {$_.name -like '`[*' }).count
+
                     $OutObj = @()
                     $OutObj = [pscustomobject]@{
-                        "Service" = @($Service).count
-                        "Enforcement Policy" = @($enf_policy).count
-                        "Enforcement Profile" = @($enf_profile).count
+                        "Service" = "$service_count (default: $service_count_default)"
+                        "Service Enabled" = "$service_count_enabled (default: $service_count_enabled_default)"
+                        "Enforcement Policy" = "$enf_policy_count (default: $enf_policy_count_default)"
+                        "Enforcement Profile" = "$enf_profile_count (default: $enf_profile_count_default)"
                     }
 
                     $TableParams = @{
