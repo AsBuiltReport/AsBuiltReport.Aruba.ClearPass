@@ -169,6 +169,39 @@ function Get-AbrCPPMService {
                     }
                 }
             }
+
+            if ($enf_policy -and $InfoLevel.service -ge 1) {
+                Section -Style Heading3 'Enforcement Policy' {
+                    Paragraph "The following section details Enforcement Policy configured on ClearPass."
+                    BlankLine
+
+                    $OutObj = @()
+                    foreach ($policy in $enf_policy) {
+                        $OutObj += [pscustomobject]@{
+                            "Id" = $policy.id
+                            "Name" = $policy.name
+                            "Type" = $policy.enforcement_type
+                            "Default" = $policy.default_enforcement_profile
+                            "Rule Algo" = $policy.rule_eval_algo
+                            "Rules Count" = @($policy.rules).count
+                            "Ref" = ($service | Where-Object {$_.enf_policy -eq $policy.name}).count
+                        }
+                    }
+
+                    $TableParams = @{
+                        Name = "Enforcement Policy"
+                        List = $false
+                        ColumnWidths = 7, 30, 14, 15, 20, 7, 7
+                    }
+
+                    if ($Report.ShowTableCaptions) {
+                        $TableParams['Caption'] = "- $($TableParams.Name)"
+                    }
+
+                    $OutObj | Table @TableParams
+                }
+
+            }
         }
 
     }
