@@ -71,6 +71,9 @@ function Invoke-AsBuiltReport.Aruba.ClearPass {
                 if ($InfoLevel.NetworkDevice.PSObject.Properties.Value -ne 0) {
                     Get-AbrCPPMNetworkDevice
                 }
+                if ($InfoLevel.Service.PSObject.Properties.Value -ne 0) {
+                    Get-AbrCPPMService
+                }
             }
         } catch {
             Write-PScriboMessage -IsWarning $_.Exception.Message
