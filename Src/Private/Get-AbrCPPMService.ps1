@@ -92,7 +92,7 @@ function Get-AbrCPPMService {
                     }
 
                     $TableParams = @{
-                        Name = "Network Device"
+                        Name = "Service"
                         List = $false
                         ColumnWidths = 10, 30, 15, 10, 5, 30
                     }
