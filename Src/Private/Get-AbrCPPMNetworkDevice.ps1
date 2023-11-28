@@ -100,8 +100,8 @@ function Get-AbrCPPMNetworkDevice {
                         $OutObj += [pscustomobject]@{
                             "Id" = $ndg.id
                             "Name" = $ndg.name
-                            "Description" = $ndg.license_type
-                            "Group Format" = $ndg.ip_address
+                            "Description" = $ndg.description
+                            "Group Format" = $ndg.group_format
                             "Value" = $ndg.value
                         }
                     }
