@@ -75,7 +75,8 @@ function Invoke-AsBuiltReport.Aruba.ClearPass {
                     Get-AbrCPPMService
                 }
             }
-        } catch {
+        }
+        catch {
             Write-PScriboMessage -IsWarning $_.Exception.Message
         }
 
