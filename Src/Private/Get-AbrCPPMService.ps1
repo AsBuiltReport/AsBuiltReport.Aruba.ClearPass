@@ -214,17 +214,17 @@ function Get-AbrCPPMService {
                             "Id" = $profile.id
                             "Name" = $profile.name
                             "Type" = $profile.type
-                            "Description" = $profile.attributes
+                            "Description" = $profile.description
                             "Action" = $profile.action
                             "Attribute" = @($profile.attributes).count
-                            "Ref" = ($enf_policy | Where-Object {$_.rules.enforcement_profiles_names -eq $profile.name}).count
+                            "Ref" = ($enf_policy | Where-Object {$_.rules.enforcement_profile_names -eq $profile.name}).count
                         }
                     }
 
                     $TableParams = @{
                         Name = "Enforcement Profile"
                         List = $false
-                        ColumnWidths = 7, 30, 14, 15, 20, 7, 7
+                        ColumnWidths = 7, 30, 14, 25, 10, 7, 7
                     }
 
                     if ($Report.ShowTableCaptions) {
