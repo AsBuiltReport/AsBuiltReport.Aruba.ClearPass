@@ -55,6 +55,10 @@ RequiredModules = @(
     @{
         ModuleName = 'AsBuiltReport.Core';
         ModuleVersion = '1.3.0'
+    },
+    @{
+        ModuleName = 'PowerArubaCP';
+        ModuleVersion = '0.6.0'
     }
 )
 
