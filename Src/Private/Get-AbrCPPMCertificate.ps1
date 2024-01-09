@@ -1,7 +1,7 @@
 function Get-AbrCPPMCertificate {
     <#
     .SYNOPSIS
-        Used by As Built Report to returns Certificate Trusted List Device settings.
+        Used by As Built Report to returns Certificate Trusted List settings.
     .DESCRIPTION
         Documents the configuration of Aruba ClearPass in Word/HTML/Text formats using PScribo.
     .NOTES
@@ -116,7 +116,7 @@ function Get-AbrCPPMCertificate {
             }
             if ($CertTrustList -and $InfoLevel.Certificate -ge 1) {
                 Section -Style Heading3 'Summary' {
-                    Paragraph "The following section provides a summary of Certificate Trusted List Device settings."
+                    Paragraph "The following section provides a summary of Certificate Trusted List settings."
                     BlankLine
 
                     $OutObj = @()
@@ -142,7 +142,7 @@ function Get-AbrCPPMCertificate {
 
             if ($CertTrustList -and $InfoLevel.Certificate -ge 1) {
                 Section -Style Heading3 'Certificate Trust List' {
-                    Paragraph "The following section details Certificate Trust Lis configured on ClearPass."
+                    Paragraph "The following section details Certificate Trust List configured on ClearPass."
                     BlankLine
 
                     $OutObj = @()
