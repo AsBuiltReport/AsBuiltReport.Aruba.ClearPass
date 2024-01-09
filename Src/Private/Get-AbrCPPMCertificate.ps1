@@ -30,7 +30,90 @@ function Get-AbrCPPMCertificate {
             BlankLine
 
             $CertTrustList = Get-ArubaCPCertTrustList -details -limit 1000
+            $ServerConfiguration = Get-ArubaCPServerConfiguration
 
+            if ($InfoLevel.Certificate -ge 1) {
+                Section -Style Heading3 'Server Certificate' {
+                    Paragraph "The following section provides a summary of Certificate settings."
+                    BlankLine
+
+                    foreach ($sc in $ServerConfiguration) {
+                        #No API call to get directly ALL Server certificate, need to ask service_name by service name...
+                        $c_https_rsa = Get-ArubaCPServerCertificate -server_uuid $sc.server_uuid -service_name "HTTPS(RSA)"
+                        $c_https_ecc = Get-ArubaCPServerCertificate -server_uuid $sc.server_uuid -service_name "HTTPS(ECC)"
+                        $c_radius = Get-ArubaCPServerCertificate -server_uuid $sc.server_uuid -service_name "RADIUS"
+                        $c_radsec = Get-ArubaCPServerCertificate -server_uuid $sc.server_uuid -service_name "RadSec"
+                        $c_database = Get-ArubaCPServerCertificate -server_uuid $sc.server_uuid -service_name "Database"
+
+                        $OutObj = @()
+                        #HTTPS RSA
+                        $OutObj += [pscustomobject]@{
+                            "Id"           = $c_https_rsa.service_id
+                            "Service Name" = $c_https_rsa.service_name
+                            "Subject"      = $c_https_rsa.subject
+                            "Issue Date"   = $c_https_rsa.issue_date
+                            "Expiry Date"  = $c_https_rsa.expiry_date
+                            "Validity"     = $c_https_rsa.validity
+                            "Enable"       = $c_https_rsa.enabled
+                        }
+
+                        #HTTPS ECC
+                        $OutObj += [pscustomobject]@{
+                            "Id"           = $c_https_ecc.service_id
+                            "Service Name" = $c_https_ecc.service_name
+                            "Subject"      = $c_https_ecc.subject
+                            "Issue Date"   = $c_https_ecc.issue_date
+                            "Expiry Date"  = $c_https_ecc.expiry_date
+                            "Validity"     = $c_https_ecc.validity
+                            "Enable"       = $c_https_ecc.enabled
+                        }
+
+                        #RADIUS
+                        $OutObj += [pscustomobject]@{
+                            "Id"           = $c_radius.service_id
+                            "Service Name" = $c_radius.service_name
+                            "Subject"      = $c_radius.subject
+                            "Issue Date"   = $c_radius.issue_date
+                            "Expiry Date"  = $c_radius.expiry_date
+                            "Validity"     = $c_radius.validity
+                            "Enable"       = $c_radius.enabled
+                        }
+
+                        #RadSec
+                        $OutObj += [pscustomobject]@{
+                            "Id"           = $c_radsec.service_id
+                            "Service Name" = $c_radsec.service_name
+                            "Subject"      = $c_radsec.subject
+                            "Issue Date"   = $c_radsec.issue_date
+                            "Expiry Date"  = $c_radsec.expiry_date
+                            "Validity"     = $c_radsec.validity
+                            "Enable"       = $c_radsec.enabled
+                        }
+
+                        #Database
+                        $OutObj += [pscustomobject]@{
+                            "Id"           = $c_database.service_id
+                            "Service Name" = $c_database.service_name
+                            "Subject"      = $c_database.subject
+                            "Issue Date"   = $c_database.issue_date
+                            "Expiry Date"  = $c_database.expiry_date
+                            "Validity"     = $c_database.validity
+                            "Enable"       = $c_database.enabled
+                        }
+                        $TableParams = @{
+                            Name         = "Certificate $($sc.name)"
+                            List         = $false
+                            ColumnWidths = 5, 17, 30, 16, 16, 8, 8
+                        }
+
+                        if ($Report.ShowTableCaptions) {
+                            $TableParams['Caption'] = "- $($TableParams.Name)"
+                        }
+
+                        $OutObj | Table @TableParams
+                    }
+                }
+            }
             if ($CertTrustList -and $InfoLevel.Certificate -ge 1) {
                 Section -Style Heading3 'Summary' {
                     Paragraph "The following section provides a summary of Certificate Trusted List Device settings."
