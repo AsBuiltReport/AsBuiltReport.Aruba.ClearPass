@@ -115,7 +115,7 @@ function Get-AbrCPPMCertificate {
                 }
             }
             if ($CertTrustList -and $InfoLevel.Certificate -ge 1) {
-                Section -Style Heading3 'Summary' {
+                Section -Style Heading3 'Certificate Trust List Summary' {
                     Paragraph "The following section provides a summary of Certificate Trusted List settings."
                     BlankLine
 
@@ -141,7 +141,7 @@ function Get-AbrCPPMCertificate {
             }
 
             if ($CertTrustList -and $InfoLevel.Certificate -ge 1) {
-                Section -Style Heading3 'Certificate Trust List' {
+                Section -Style Heading3 'Certificate Trust List Detail' {
                     Paragraph "The following section details Certificate Trust List configured on ClearPass."
                     BlankLine
 
