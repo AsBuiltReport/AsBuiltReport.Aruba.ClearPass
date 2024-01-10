@@ -53,15 +53,15 @@ function Get-AbrCPPMService {
 
                     $OutObj = @()
                     $OutObj = [pscustomobject]@{
-                        "Service" = "$service_count (default: $service_count_default)"
-                        "Service Enabled" = "$service_count_enabled (default: $service_count_enabled_default)"
-                        "Enforcement Policy" = "$enf_policy_count (default: $enf_policy_count_default)"
+                        "Service"             = "$service_count (default: $service_count_default)"
+                        "Service Enabled"     = "$service_count_enabled (default: $service_count_enabled_default)"
+                        "Enforcement Policy"  = "$enf_policy_count (default: $enf_policy_count_default)"
                         "Enforcement Profile" = "$enf_profile_count (default: $enf_profile_count_default)"
                     }
 
                     $TableParams = @{
-                        Name = "Service Summary"
-                        List = $true
+                        Name         = "Service Summary"
+                        List         = $true
                         ColumnWidths = 50, 50
                     }
 
@@ -82,18 +82,18 @@ function Get-AbrCPPMService {
                     $OutObj = @()
                     foreach ($srvc in $Service) {
                         $OutObj += [pscustomobject]@{
-                            "Id" = $srvc.id
-                            "Name" = $srvc.name
-                            "Type" = $srvc.type
+                            "Id"      = $srvc.id
+                            "Name"    = $srvc.name
+                            "Type"    = $srvc.type
                             "Enabled" = $srvc.enabled
-                            "No" = $srvc.order_no
-                            "Policy" = $srvc.enf_policy
+                            "No"      = $srvc.order_no
+                            "Policy"  = $srvc.enf_policy
                         }
                     }
 
                     $TableParams = @{
-                        Name = "Service"
-                        List = $false
+                        Name         = "Service"
+                        List         = $false
                         ColumnWidths = 10, 30, 15, 10, 5, 30
                     }
 
@@ -112,24 +112,24 @@ function Get-AbrCPPMService {
                                 $OutObj = @()
 
                                 $OutObj = [pscustomobject]@{
-                                    "Name" = $srvc.name
-                                    "Type" = $srvc.type
-                                    "Template" = $srvc.template
-                                    "Enabled" = $srvc.enabled
+                                    "Name"               = $srvc.name
+                                    "Type"               = $srvc.type
+                                    "Template"           = $srvc.template
+                                    "Enabled"            = $srvc.enabled
                                     #"Hit Count" = $srvc.hit_count
-                                    "Order No" = $srvc.order_no
-                                    "Description" = $srvc.description
-                                    "Monitor Mode" = $srvc.monitor_mode
-                                    "Auth Sources" = $srvc.auth_sources -join ", "
-                                    "Auth zSources" = $srvc.authz_sources -join ", "
-                                    "Strip Username" = $srvc.strip_username
+                                    "Order No"           = $srvc.order_no
+                                    "Description"        = $srvc.description
+                                    "Monitor Mode"       = $srvc.monitor_mode
+                                    "Auth Sources"       = $srvc.auth_sources -join ", "
+                                    "Auth zSources"      = $srvc.authz_sources -join ", "
+                                    "Strip Username"     = $srvc.strip_username
                                     "Enforcement Policy" = $srvc.enf_policy
-                                    "Rules Match Type" = $srvc.rules_match_type
+                                    "Rules Match Type"   = $srvc.rules_match_type
                                 }
 
                                 $TableParams = @{
-                                    Name = "Service: $($srvc.name)"
-                                    List = $true
+                                    Name         = "Service: $($srvc.name)"
+                                    List         = $true
                                     ColumnWidths = 20, 80
                                 }
 
@@ -145,16 +145,16 @@ function Get-AbrCPPMService {
                                     foreach ($rule in $srvc.rules_conditions) {
 
                                         $OutObj += [pscustomobject]@{
-                                            "Type" = $rule.type
-                                            "Name" = $rule.name
+                                            "Type"     = $rule.type
+                                            "Name"     = $rule.name
                                             "Operator" = $rule.operator
-                                            "Value" = $rule.value
+                                            "Value"    = $rule.value
                                         }
                                     }
 
                                     $TableParams = @{
-                                        Name = "Rules Conditions: $($srvc.name)"
-                                        List = $false
+                                        Name         = "Rules Conditions: $($srvc.name)"
+                                        List         = $false
                                         ColumnWidths = 25, 30, 10, 35
                                     }
 
@@ -178,19 +178,19 @@ function Get-AbrCPPMService {
                     $OutObj = @()
                     foreach ($policy in $enf_policy) {
                         $OutObj += [pscustomobject]@{
-                            "Id" = $policy.id
-                            "Name" = $policy.name
-                            "Type" = $policy.enforcement_type
-                            "Default" = $policy.default_enforcement_profile
-                            "Rule Algo" = $policy.rule_eval_algo
+                            "Id"          = $policy.id
+                            "Name"        = $policy.name
+                            "Type"        = $policy.enforcement_type
+                            "Default"     = $policy.default_enforcement_profile
+                            "Rule Algo"   = $policy.rule_eval_algo
                             "Rules Count" = @($policy.rules).count
-                            "Ref" = ($service | Where-Object {$_.enf_policy -eq $policy.name}).count
+                            "Ref"         = ($service | Where-Object { $_.enf_policy -eq $policy.name }).count
                         }
                     }
 
                     $TableParams = @{
-                        Name = "Enforcement Policy"
-                        List = $false
+                        Name         = "Enforcement Policy"
+                        List         = $false
                         ColumnWidths = 7, 30, 14, 15, 20, 7, 7
                     }
 
@@ -211,19 +211,19 @@ function Get-AbrCPPMService {
                     $OutObj = @()
                     foreach ($profile in $enf_profile) {
                         $OutObj += [pscustomobject]@{
-                            "Id" = $profile.id
-                            "Name" = $profile.name
-                            "Type" = $profile.type
+                            "Id"          = $profile.id
+                            "Name"        = $profile.name
+                            "Type"        = $profile.type
                             "Description" = $profile.description
-                            "Action" = $profile.action
-                            "Attribute" = @($profile.attributes).count
-                            "Ref" = ($enf_policy | Where-Object {$_.rules.enforcement_profile_names -eq $profile.name}).count
+                            "Action"      = $profile.action
+                            "Attribute"   = @($profile.attributes).count
+                            "Ref"         = ($enf_policy | Where-Object { $_.rules.enforcement_profile_names -eq $profile.name }).count
                         }
                     }
 
                     $TableParams = @{
-                        Name = "Enforcement Profile"
-                        List = $false
+                        Name         = "Enforcement Profile"
+                        List         = $false
                         ColumnWidths = 7, 30, 14, 25, 10, 7, 7
                     }
 
