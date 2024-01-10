@@ -184,7 +184,7 @@ function Get-AbrCPPMService {
                             "Default"     = $policy.default_enforcement_profile
                             "Rule Algo"   = $policy.rule_eval_algo
                             "Rules Count" = @($policy.rules).count
-                            "Ref"         = ($service | Where-Object { $_.enf_policy -eq $policy.name }).count
+                            "Ref"         = @($service | Where-Object { $_.enf_policy -eq $policy.name }).count
                         }
                     }
 
@@ -278,7 +278,7 @@ function Get-AbrCPPMService {
                             "Description" = $profile.description
                             "Action"      = $profile.action
                             "Attribute"   = @($profile.attributes).count
-                            "Ref"         = ($enf_policy | Where-Object { $_.rules.enforcement_profile_names -eq $profile.name }).count
+                            "Ref"         = @($enf_policy | Where-Object { $_.rules.enforcement_profile_names -eq $profile.name }).count
                         }
                     }
 
