@@ -199,6 +199,67 @@ function Get-AbrCPPMService {
                     }
 
                     $OutObj | Table @TableParams
+
+                    if ($InfoLevel.service -ge 2) {
+
+                        Paragraph "The following section details Enforcement Policy configured on ClearPass."
+                        BlankLine
+                        foreach ($policy in $enf_policy) {
+                            Section -Style Heading3 "Enforcement Policy: $($policy.name)" {
+                                $OutObj = @()
+
+                                $OutObj = [pscustomobject]@{
+                                    "Id"        = $policy.id
+                                    "Name"      = $policy.name
+                                    "Type"      = $policy.enforcement_type
+                                    "Default"   = $policy.default_enforcement_profile
+                                    "Rule Algo" = $policy.rule_eval_algo
+                                }
+
+                                $TableParams = @{
+                                    Name         = "Enforcement Policy:: $($policy.name)"
+                                    List         = $true
+                                    ColumnWidths = 20, 80
+                                }
+
+                                if ($Report.ShowTableCaptions) {
+                                    $TableParams['Caption'] = "- $($TableParams.Name)"
+                                }
+
+                                $OutObj | Table @TableParams
+
+                                #Rules Conditions
+                                if ($policy.rules) {
+                                    $OutObj = @()
+                                    foreach ($rule in $policy.rules) {
+                                        $conditions = ""
+                                        foreach ($condition in $rule.condition) {
+                                            if ($conditions) {
+                                                $conditions += " AND "
+                                            }
+                                            $conditions = "$($condition.name) $($condition.oper) $($condition.value)"
+                                        }
+                                        $OutObj += [pscustomobject]@{
+                                            "Condition"            = $conditions
+                                            "Enforcement Profiles" = $rule.enforcement_profile_names -join ", "
+                                        }
+                                    }
+
+                                    $TableParams = @{
+                                        Name         = "Rules : $($policy.name)"
+                                        List         = $false
+                                        ColumnWidths = 70, 30
+                                    }
+
+                                    if ($Report.ShowTableCaptions) {
+                                        $TableParams['Caption'] = "- $($TableParams.Name)"
+                                    }
+
+                                    $OutObj | Table @TableParams
+                                }
+                            }
+                        }
+                    }
                 }
 
             }
