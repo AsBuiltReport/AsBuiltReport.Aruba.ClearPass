@@ -31,6 +31,7 @@ function Get-AbrCPPMCertificate {
 
             $CertTrustList = Get-ArubaCPCertTrustList -details -limit 1000
             $ServerConfiguration = Get-ArubaCPServerConfiguration
+            $ServiceCertificate = Get-ArubaCPServiceCertificate
 
             if ($InfoLevel.Certificate -ge 1) {
                 Section -Style Heading3 'Server Certificate' {
@@ -114,6 +115,38 @@ function Get-AbrCPPMCertificate {
                     }
                 }
             }
+
+            if ($ServiceCertificate -and $InfoLevel.Certificate -ge 1) {
+                Section -Style Heading3 'Service Certificate' {
+                    Paragraph "The following section provides a summary of Service Certificate settings."
+                    BlankLine
+
+                    $OutObj = @()
+                    foreach ($scert in $ServiceCertificate) {
+                        $OutObj += [pscustomobject]@{
+                            "Id"          = $scert.id
+                            "Subject"     = $scert.subject
+                            "Issued By"   = $scert.issued_by
+                            "Issue Date"  = $scert.issue_date
+                            "Expiry Date" = $scert.expiry_date
+                            "Validity"    = $scert.validity
+                        }
+                    }
+
+                    $TableParams = @{
+                        Name         = "Service Certificate"
+                        List         = $false
+                        ColumnWidths = 5, 25, 30, 16, 16, 8
+                    }
+
+                    if ($Report.ShowTableCaptions) {
+                        $TableParams['Caption'] = "- $($TableParams.Name)"
+                    }
+
+                    $OutObj | Table @TableParams
+                }
+            }
+
             if ($CertTrustList -and $InfoLevel.Certificate -ge 1) {
                 Section -Style Heading3 'Certificate Trust List Summary' {
                     Paragraph "The following section provides a summary of Certificate Trusted List settings."
