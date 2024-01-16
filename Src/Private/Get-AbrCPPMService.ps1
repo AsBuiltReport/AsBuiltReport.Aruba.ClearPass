@@ -30,8 +30,11 @@ function Get-AbrCPPMService {
             BlankLine
 
             $service = Get-ArubaCPService -limit 1000 | Sort-Object order_no
-            $enf_policy = (Invoke-ArubaCPRestMethod "api/enforcement-policy" -limit 1000)._embedded.items
-            $enf_profile = (Invoke-ArubaCPRestMethod "api/enforcement-profile" -limit 1000)._embedded.items
+
+            if ( $defaultArubaCPConnection.version -gt [version]"6.11.0") {
+                $enf_policy = (Invoke-ArubaCPRestMethod "api/enforcement-policy" -limit 1000)._embedded.items
+                $enf_profile = (Invoke-ArubaCPRestMethod "api/enforcement-profile" -limit 1000)._embedded.items
+            }
 
             if ($service -and $InfoLevel.Service -ge 1) {
                 Section -Style Heading3 'Summary' {
