@@ -306,7 +306,11 @@ function Get-AbrCPPMService {
                                     "Id"     = $profile.id
                                     "Name"   = $profile.name
                                     "Type"   = $profile.type
-                                    "Action" = $profile.action
+                                }
+
+                                #Action (not always available)
+                                if ($profile.action) {
+                                    $OutObj | Add-Member -MemberType NoteProperty -name "Action" -Value $profile.action
                                 }
 
                                 $TableParams = @{
