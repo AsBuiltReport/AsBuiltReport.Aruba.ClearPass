@@ -303,18 +303,18 @@ function Get-AbrCPPMService {
                                 $OutObj = @()
 
                                 $OutObj = [pscustomobject]@{
-                                    "Id"     = $profile.id
-                                    "Name"   = $profile.name
-                                    "Type"   = $profile.type
+                                    "Id"   = $profile.id
+                                    "Name" = $profile.name
+                                    "Type" = $profile.type
                                 }
 
                                 #Action (not always available)
                                 if ($profile.action) {
-                                    $OutObj | Add-Member -MemberType NoteProperty -name "Action" -Value $profile.action
+                                    $OutObj | Add-Member -MemberType NoteProperty -Name "Action" -Value $profile.action
                                 }
 
                                 if ($profile.radius_dyn_authz_template) {
-                                    $OutObj | Add-Member -MemberType NoteProperty -name "RADIUS Dyn Template" -Value $profile.radius_dyn_authz_template
+                                    $OutObj | Add-Member -MemberType NoteProperty -Name "RADIUS Dyn Template" -Value $profile.radius_dyn_authz_template
                                 }
 
                                 $TableParams = @{
