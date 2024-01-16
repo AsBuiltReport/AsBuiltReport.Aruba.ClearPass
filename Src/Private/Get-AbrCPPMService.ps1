@@ -313,10 +313,14 @@ function Get-AbrCPPMService {
                                     $OutObj | Add-Member -MemberType NoteProperty -name "Action" -Value $profile.action
                                 }
 
+                                if ($profile.radius_dyn_authz_template) {
+                                    $OutObj | Add-Member -MemberType NoteProperty -name "RADIUS Dyn Template" -Value $profile.radius_dyn_authz_template
+                                }
+
                                 $TableParams = @{
                                     Name         = "Enforcement profile: $($profile.name)"
                                     List         = $true
-                                    ColumnWidths = 20, 80
+                                    ColumnWidths = 30, 70
                                 }
 
                                 if ($Report.ShowTableCaptions) {
