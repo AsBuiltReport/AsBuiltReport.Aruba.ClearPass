@@ -353,6 +353,31 @@ function Get-AbrCPPMService {
 
                                     $OutObj | Table @TableParams
                                 }
+
+                                #TACACS Service Params
+                                if ($profile.tacacs_service_params) {
+                                    $OutObj = @()
+                                    foreach ($tacacs_service_params in $profile.tacacs_service_params) {
+
+                                        $OutObj += [pscustomobject]@{
+                                            "Privilege Level"            = $tacacs_service_params.privilege_level
+                                            "Services"                   = $tacacs_service_params.services -join ", "
+                                            "Authorize Attribute Status" = $tacacs_service_params.authorize_attribute_status
+                                        }
+                                    }
+
+                                    $TableParams = @{
+                                        Name         = "Tacacs Services Params: $($profile.name)"
+                                        List         = $false
+                                        ColumnWidths = 33, 34, 33
+                                    }
+
+                                    if ($Report.ShowTableCaptions) {
+                                        $TableParams['Caption'] = "- $($TableParams.Name)"
+                                    }
+
+                                    $OutObj | Table @TableParams
+                                }
                             }
                         }
                     }
