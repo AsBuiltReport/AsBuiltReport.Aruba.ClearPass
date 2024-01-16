@@ -293,6 +293,61 @@ function Get-AbrCPPMService {
                     }
 
                     $OutObj | Table @TableParams
+
+                    if ($InfoLevel.service -ge 2) {
+
+                        Paragraph "The following section details Enforcement Profiles configured on ClearPass."
+                        BlankLine
+                        foreach ($profile in $enf_profile) {
+                            Section -Style Heading3 "Enforcement Profiles: $($profile.name)" {
+                                $OutObj = @()
+
+                                $OutObj = [pscustomobject]@{
+                                    "Id"     = $profile.id
+                                    "Name"   = $profile.name
+                                    "Type"   = $profile.type
+                                    "Action" = $profile.action
+                                }
+
+                                $TableParams = @{
+                                    Name         = "Enforcement profile: $($profile.name)"
+                                    List         = $true
+                                    ColumnWidths = 20, 80
+                                }
+
+                                if ($Report.ShowTableCaptions) {
+                                    $TableParams['Caption'] = "- $($TableParams.Name)"
+                                }
+
+                                $OutObj | Table @TableParams
+
+                                #Attributes
+                                if ($profile.attributes) {
+                                    $OutObj = @()
+                                    foreach ($attributes in $profile.attributes) {
+
+                                        $OutObj += [pscustomobject]@{
+                                            "Type"  = $attributes.type
+                                            "Name"  = $attributes.name
+                                            "Value" = $attributes.value
+                                        }
+                                    }
+
+                                    $TableParams = @{
+                                        Name         = "Atttributes : $($profile.name)"
+                                        List         = $false
+                                        ColumnWidths = 25, 25, 50
+                                    }
+
+                                    if ($Report.ShowTableCaptions) {
+                                        $TableParams['Caption'] = "- $($TableParams.Name)"
+                                    }
+
+                                    $OutObj | Table @TableParams
+                                }
+                            }
+                        }
+                    }
                 }
 
             }
