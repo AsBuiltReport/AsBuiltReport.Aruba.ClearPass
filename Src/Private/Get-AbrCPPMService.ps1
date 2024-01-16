@@ -116,20 +116,33 @@ function Get-AbrCPPMService {
                             Section -Style Heading3 "Service: $($srvc.name)" {
                                 $OutObj = @()
 
-                                $OutObj = [pscustomobject]@{
-                                    "Name"               = $srvc.name
-                                    "Type"               = $srvc.type
-                                    "Template"           = $srvc.template
-                                    "Enabled"            = $srvc.enabled
-                                    #"Hit Count" = $srvc.hit_count
-                                    "Order No"           = $srvc.order_no
-                                    "Description"        = $srvc.description
-                                    "Monitor Mode"       = $srvc.monitor_mode
-                                    "Auth Sources"       = $srvc.auth_sources -join ", "
-                                    "Auth zSources"      = $srvc.authz_sources -join ", "
-                                    "Strip Username"     = $srvc.strip_username
-                                    "Enforcement Policy" = $srvc.enf_policy
-                                    "Rules Match Type"   = $srvc.rules_match_type
+                                if ( $defaultArubaCPConnection.version -gt [version]"6.11.0") {
+                                    $OutObj = [pscustomobject]@{
+                                        "Name"               = $srvc.name
+                                        "Type"               = $srvc.type
+                                        "Template"           = $srvc.template
+                                        "Enabled"            = $srvc.enabled
+                                        #"Hit Count" = $srvc.hit_count
+                                        "Order No"           = $srvc.order_no
+                                        "Description"        = $srvc.description
+                                        "Monitor Mode"       = $srvc.monitor_mode
+                                        "Auth Sources"       = $srvc.auth_sources -join ", "
+                                        "Auth zSources"      = $srvc.authz_sources -join ", "
+                                        "Strip Username"     = $srvc.strip_username
+                                        "Enforcement Policy" = $srvc.enf_policy
+                                        "Rules Match Type"   = $srvc.rules_match_type
+                                    }
+                                }
+                                else {
+                                    #Missing fields with CPPM < 6.11.0...
+                                    $OutObj = [pscustomobject]@{
+                                        "Name"               = $srvc.name
+                                        "Type"               = $srvc.type
+                                        "Template"           = $srvc.template
+                                        "Enabled"            = $srvc.enabled
+                                        #"Hit Count" = $srvc.hit_count
+                                        "Order No"           = $srvc.order_no
+                                    }
                                 }
 
                                 $TableParams = @{
