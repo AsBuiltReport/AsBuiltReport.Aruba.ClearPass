@@ -56,7 +56,7 @@ function Invoke-AsBuiltReport.Aruba.ClearPass {
             Connect-ArubaCP -Server $System -token $token -SkipCertificateCheck | Out-Null
 
             #Get Model
-            $name = (Get-ArubaCPServerConfiguration).name
+            $name = (Get-ArubaCPServerConfiguration | Where-Object { $_.is_publisher -eq "True" }).name
             Write-PScriboMessage "Connect to $System : $name"
 
             Section -Style Heading1 "Implementation Report $name" {
