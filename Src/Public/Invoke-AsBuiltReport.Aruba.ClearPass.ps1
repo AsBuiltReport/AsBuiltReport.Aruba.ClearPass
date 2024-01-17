@@ -71,11 +71,11 @@ function Invoke-AsBuiltReport.Aruba.ClearPass {
                 if ($InfoLevel.Certificate.PSObject.Properties.Value -ne 0) {
                     Get-AbrCPPMCertificate
                 }
-                if ($InfoLevel.NetworkDevice.PSObject.Properties.Value -ne 0) {
-                    Get-AbrCPPMNetworkDevice
-                }
                 if ($InfoLevel.Service.PSObject.Properties.Value -ne 0) {
                     Get-AbrCPPMService
+                }
+                if ($InfoLevel.NetworkDevice.PSObject.Properties.Value -ne 0) {
+                    Get-AbrCPPMNetworkDevice
                 }
             }
         }

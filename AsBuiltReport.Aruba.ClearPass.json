@@ -15,8 +15,8 @@
         "System": 1,
         "License": 2,
         "Certificate": 1,
-        "NetworkDevice": 1,
-        "Service": 2
+        "Service": 2,
+        "NetworkDevice": 1
     },
     "HealthCheck": {}
 }
