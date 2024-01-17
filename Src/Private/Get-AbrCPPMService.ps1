@@ -234,7 +234,7 @@ function Get-AbrCPPMService {
                                 }
 
                                 $TableParams = @{
-                                    Name         = "Enforcement Policy:: $($policy.name)"
+                                    Name         = "Enforcement Policy: $($policy.name)"
                                     List         = $true
                                     ColumnWidths = 20, 80
                                 }
