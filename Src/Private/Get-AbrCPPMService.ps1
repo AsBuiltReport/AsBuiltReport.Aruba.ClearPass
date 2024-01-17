@@ -135,12 +135,12 @@ function Get-AbrCPPMService {
                                 else {
                                     #Missing fields with CPPM < 6.11.0...
                                     $OutObj = [pscustomobject]@{
-                                        "Name"               = $srvc.name
-                                        "Type"               = $srvc.type
-                                        "Template"           = $srvc.template
-                                        "Enabled"            = $srvc.enabled
+                                        "Name"     = $srvc.name
+                                        "Type"     = $srvc.type
+                                        "Template" = $srvc.template
+                                        "Enabled"  = $srvc.enabled
                                         #"Hit Count" = $srvc.hit_count
-                                        "Order No"           = $srvc.order_no
+                                        "Order No" = $srvc.order_no
                                     }
                                 }
 
