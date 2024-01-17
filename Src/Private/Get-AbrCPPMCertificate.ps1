@@ -24,7 +24,6 @@ function Get-AbrCPPMCertificate {
     }
 
     process {
-        PageBreak
         Section -Style Heading2 'Certificate' {
             Paragraph "The following section details Certificate settings configured on FortiGate."
             BlankLine

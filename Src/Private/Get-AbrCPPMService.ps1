@@ -24,7 +24,6 @@ function Get-AbrCPPMService {
     }
 
     process {
-        PageBreak
         Section -Style Heading2 'Service' {
             Paragraph "The following section details Service settings configured on FortiGate."
             BlankLine

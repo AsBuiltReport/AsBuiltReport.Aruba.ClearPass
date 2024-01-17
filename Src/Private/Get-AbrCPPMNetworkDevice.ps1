@@ -24,7 +24,6 @@ function Get-AbrCPPMNetworkDevice {
     }
 
     process {
-        PageBreak
         Section -Style Heading2 'Network Device' {
             Paragraph "The following section details Network Device settings configured on FortiGate."
             BlankLine
@@ -39,13 +38,13 @@ function Get-AbrCPPMNetworkDevice {
 
                     $OutObj = @()
                     $OutObj = [pscustomobject]@{
-                        "Network Device" = @($NetworkDevice).count
+                        "Network Device"       = @($NetworkDevice).count
                         "Network Device Group" = @($NetworkDeviceGroup).count
                     }
 
                     $TableParams = @{
-                        Name = "Network Device Summary"
-                        List = $true
+                        Name         = "Network Device Summary"
+                        List         = $true
                         ColumnWidths = 50, 50
                     }
 
@@ -66,18 +65,18 @@ function Get-AbrCPPMNetworkDevice {
                     $OutObj = @()
                     foreach ($nad in $NetworkDevice) {
                         $OutObj += [pscustomobject]@{
-                            "Id" = $nad.id
-                            "Name" = $nad.name
+                            "Id"          = $nad.id
+                            "Name"        = $nad.name
                             "Description" = $nad.license_type
-                            "IP Address" = $nad.ip_address
-                            "Vendor" = $nad.vendor_name
-                            "CoA " = $nad.coa_capable
+                            "IP Address"  = $nad.ip_address
+                            "Vendor"      = $nad.vendor_name
+                            "CoA "        = $nad.coa_capable
                         }
                     }
 
                     $TableParams = @{
-                        Name = "Network Device"
-                        List = $false
+                        Name         = "Network Device"
+                        List         = $false
                         ColumnWidths = 10, 25, 25, 15, 15, 10
                     }
 
@@ -98,17 +97,17 @@ function Get-AbrCPPMNetworkDevice {
                     $OutObj = @()
                     foreach ($ndg in $NetworkDeviceGroup) {
                         $OutObj += [pscustomobject]@{
-                            "Id" = $ndg.id
-                            "Name" = $ndg.name
-                            "Description" = $ndg.description
+                            "Id"           = $ndg.id
+                            "Name"         = $ndg.name
+                            "Description"  = $ndg.description
                             "Group Format" = $ndg.group_format
-                            "Value" = $ndg.value
+                            "Value"        = $ndg.value
                         }
                     }
 
                     $TableParams = @{
-                        Name = "Network Device Group"
-                        List = $false
+                        Name         = "Network Device Group"
+                        List         = $false
                         ColumnWidths = 10, 25, 25, 10, 30
                     }
 
