@@ -254,7 +254,7 @@ function Get-AbrCPPMService {
                                             if ($conditions) {
                                                 $conditions += " AND "
                                             }
-                                            $conditions += "$($condition.name) $($condition.oper) $($condition.value)"
+                                            $conditions += "($($condition.name) $($condition.oper) $($condition.value))"
                                         }
                                         $OutObj += [pscustomobject]@{
                                             "Condition"            = $conditions
