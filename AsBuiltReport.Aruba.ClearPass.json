@@ -14,6 +14,7 @@
         "_comment_": "0 = Disabled, 1 = Enabled / Summary, 2 = Adv Summary, 3 = Detailed, 4 = Adv Detailed, 5 = Comprehensive",
         "System": 1,
         "License": 2,
+        "Authentication": 1,
         "Certificate": 1,
         "Service": 2,
         "NetworkDevice": 1
