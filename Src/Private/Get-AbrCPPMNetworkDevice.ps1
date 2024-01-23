@@ -28,8 +28,8 @@ function Get-AbrCPPMNetworkDevice {
             Paragraph "The following section details Network Device settings configured on FortiGate."
             BlankLine
 
-            $NetworkDevice = Get-ArubaCPNetworkDevice
-            $NetworkDeviceGroup = Get-ArubaCPNetworkDeviceGroup
+            $NetworkDevice = Get-ArubaCPNetworkDevice -limit 1000
+            $NetworkDeviceGroup = Get-ArubaCPNetworkDeviceGroup -limit 1000
 
             if ($NetworkDevice -and $NetworkDeviceGroup -and $InfoLevel.NetworkDevice -ge 1) {
                 Section -Style Heading3 'Summary' {
