@@ -70,7 +70,7 @@ function Get-AbrCPPMAuthentication {
                             "Description"   = $m.description
                             "Method Type"   = $m.method_type
                             "Inner Methods" = $m.inner_methods
-                            "Details Count" = @($m.details).count
+                            "Details Count" = @($m.details | Get-Member -Type NoteProperty).count
                         }
                     }
 
