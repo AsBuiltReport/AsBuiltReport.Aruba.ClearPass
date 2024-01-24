@@ -180,6 +180,91 @@ function Get-AbrCPPMAuthentication {
 
                     $OutObj | Table @TableParams
 
+                    if ($InfoLevel.Authentication -ge 2) {
+
+                        Paragraph "The following section details Authentification Source configured on ClearPass."
+                        BlankLine
+                        foreach ($s in $Source) {
+                            Section -Style Heading3 "Authentication Source: $($s.name)" {
+                                $OutObj = @()
+
+                                $OutObj = [pscustomobject]@{
+                                    "Id"            = $s.id
+                                    "Name"          = $s.name
+                                    "Description"   = $s.description
+                                    "Type"          = $s.type
+                                    "Authorization" = $s.use_for_authorization
+                                }
+
+                                $TableParams = @{
+                                    Name         = "Authentification Source: $($s.name)"
+                                    List         = $true
+                                    ColumnWidths = 20, 80
+                                }
+
+                                if ($Report.ShowTableCaptions) {
+                                    $TableParams['Caption'] = "- $($TableParams.Name)"
+                                }
+
+                                $OutObj | Table @TableParams
+
+                                #auth_source_filters
+                                if ($s.auth_source_filters) {
+                                    $OutObj = @()
+                                    foreach ($asf in $s.auth_source_filters) {
+
+                                        $OutObj += [pscustomobject]@{
+                                            "Name"      = $asf.name
+                                            "Query"     = $asf.query
+                                            "Attribute" = $asf.attributes.attribute_name
+                                        }
+
+                                    }
+
+                                    $TableParams = @{
+                                        Name         = "Auth Source Filters : $($s.name)"
+                                        List         = $false
+                                        ColumnWidths = 20, 40, 40
+                                    }
+
+                                    if ($Report.ShowTableCaptions) {
+                                        $TableParams['Caption'] = "- $($TableParams.Name)"
+                                    }
+
+                                    $OutObj | Table @TableParams
+
+                                    #cppm_primary_auth_source_connection_details
+                                    if (@($s.cppm_primary_auth_source_connection_details | Get-Member -Type NoteProperty).count) {
+                                        $OutObj = @()
+                                        foreach ($cpascd in $s.cppm_primary_auth_source_connection_details.PSObject.Properties) {
+                                            #Only display when there is a value...
+                                            if ($cpascd.value) {
+                                                $OutObj += [pscustomobject]@{
+                                                    "Name"  = $cpascd.name
+                                                    "Value" = $cpascd.value
+                                                }
+                                            }
+
+                                        }
+
+                                        $TableParams = @{
+                                            Name         = "Primary Auth Source Connection Details : $($s.name)"
+                                            List         = $false
+                                            ColumnWidths = 40, 60
+                                        }
+
+                                        if ($Report.ShowTableCaptions) {
+                                            $TableParams['Caption'] = "- $($TableParams.Name)"
+                                        }
+                                        if ($OutObj.count) {
+                                            $OutObj | Table @TableParams
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
                 }
             }
         }
