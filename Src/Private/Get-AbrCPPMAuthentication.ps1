@@ -36,10 +36,17 @@ function Get-AbrCPPMAuthentication {
                     Paragraph "The following section provides a summary of Authentication settings."
                     BlankLine
 
+                    #Method, Source start with [ is configured by default (factory) on Clearpass
+                    $method_count = @($Method).count
+                    $method_count_default = @($Method | Where-Object { $_.name -like '`[*' }).Count
+
+                    $source_count = @($Source).count
+                    $source_count_default = @($Source | Where-Object { $_.name -like '`[*' }).Count
+
                     $OutObj = @()
                     $OutObj = [pscustomobject]@{
-                        "Method" = @($Method).count
-                        "Source" = @($Source).count
+                        "Method" = "$method_count (default: $method_count_default)"
+                        "Source" = "$source_count (default: $source_count_default)"
                     }
 
                     $TableParams = @{
