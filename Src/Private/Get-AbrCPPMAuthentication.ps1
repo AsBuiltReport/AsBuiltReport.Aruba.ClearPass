@@ -93,6 +93,62 @@ function Get-AbrCPPMAuthentication {
 
                     $OutObj | Table @TableParams
 
+                    if ($InfoLevel.Authentication -ge 2) {
+
+                        Paragraph "The following section details Authentification Method configured on ClearPass."
+                        BlankLine
+                        foreach ($m in $Method) {
+                            Section -Style Heading3 "Authentication Method: $($m.name)" {
+                                $OutObj = @()
+
+                                $OutObj = [pscustomobject]@{
+                                    "Id"            = $m.id
+                                    "Name"          = $m.name
+                                    "Description"   = $m.description
+                                    "Method Type"   = $m.method_type
+                                    "Inner Methods" = $m.inner_methods
+                                }
+
+                                $TableParams = @{
+                                    Name         = "Authentification Method: $($m.name)"
+                                    List         = $true
+                                    ColumnWidths = 20, 80
+                                }
+
+                                if ($Report.ShowTableCaptions) {
+                                    $TableParams['Caption'] = "- $($TableParams.Name)"
+                                }
+
+                                $OutObj | Table @TableParams
+
+                                #Details
+                                if (@($m.details | Get-Member -Type NoteProperty).count) {
+                                    $OutObj = @()
+                                    foreach ($detail in $m.details.PSObject.Properties) {
+
+                                        $OutObj += [pscustomobject]@{
+                                            "Name"  = $detail.name
+                                            "Value" = $detail.value
+                                        }
+
+                                    }
+
+                                    $TableParams = @{
+                                        Name         = "Details : $($m.name)"
+                                        List         = $false
+                                        ColumnWidths = 40, 60
+                                    }
+
+                                    if ($Report.ShowTableCaptions) {
+                                        $TableParams['Caption'] = "- $($TableParams.Name)"
+                                    }
+
+                                    $OutObj | Table @TableParams
+                                }
+                            }
+                        }
+                    }
+
                 }
             }
 
