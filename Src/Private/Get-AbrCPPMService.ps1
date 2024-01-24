@@ -25,7 +25,7 @@ function Get-AbrCPPMService {
 
     process {
         Section -Style Heading2 'Service' {
-            Paragraph "The following section details Service settings configured on FortiGate."
+            Paragraph "The following section details Service settings configured on ClearPass."
             BlankLine
 
             $service = Get-ArubaCPService -limit 1000 | Sort-Object order_no

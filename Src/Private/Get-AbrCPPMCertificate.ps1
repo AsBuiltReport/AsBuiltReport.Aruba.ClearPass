@@ -25,7 +25,7 @@ function Get-AbrCPPMCertificate {
 
     process {
         Section -Style Heading2 'Certificate' {
-            Paragraph "The following section details Certificate settings configured on FortiGate."
+            Paragraph "The following section details Certificate settings configured on ClearPass."
             BlankLine
 
             $CertTrustList = Get-ArubaCPCertTrustList -details -limit 1000

@@ -25,7 +25,7 @@ function Get-AbrCPPMLicense {
 
     process {
         Section -Style Heading2 'License' {
-            Paragraph "The following section details License settings configured on FortiGate."
+            Paragraph "The following section details License settings configured on ClearPass."
             BlankLine
 
             $summary = (Invoke-ArubaCPRestMethod "api/application-license/summary").items

@@ -25,7 +25,7 @@ function Get-AbrCPPMNetworkDevice {
 
     process {
         Section -Style Heading2 'Network Device' {
-            Paragraph "The following section details Network Device settings configured on FortiGate."
+            Paragraph "The following section details Network Device settings configured on ClearPass."
             BlankLine
 
             $NetworkDevice = Get-ArubaCPNetworkDevice -limit 1000
