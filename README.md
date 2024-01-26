@@ -31,8 +31,6 @@
 
 # Aruba ClearPass As Built Report
 
-<!-- ********** REMOVE THIS MESSAGE WHEN THE MODULE IS FUNCTIONAL ********** -->
-## :exclamation: THIS ASBUILTREPORT MODULE IS CURRENTLY IN DEVELOPMENT AND MIGHT NOT YET BE FUNCTIONAL ❗
 
 Aruba ClearPass As Built Report is a PowerShell module which works in conjunction with [AsBuiltReport.Core](https://github.com/AsBuiltReport/AsBuiltReport.Core).
 
@@ -40,36 +38,52 @@ Aruba ClearPass As Built Report is a PowerShell module which works in conjunctio
 
 Please refer to the AsBuiltReport [website](https://www.asbuiltreport.com) for more detailed information about this project.
 
+# :books: Sample Reports
+
+## Sample Report
+
+Sample Aruba ClearPass As Built report HTML file: [Sample Aruba ClearPass As-Built Report.html](https://htmlpreview.github.io/?https://raw.githubusercontent.com/AsBuiltReport/AsBuiltReport.Aruba.ClearPass/dev/Samples/Aruba%20ClearPass%20As%20Built%20Report.html)
+
+Sample Aruba ClearPass As Built report Word file: [Sample Aruba ClearPass As-Built Report.docx](https://raw.githubusercontent.com/AsBuiltReport/AsBuiltReport.Aruba.ClearPass/dev/Samples/Aruba%20ClearPass%20As%20Built%20Report.docx)
+
 # :beginner: Getting Started
 Below are the instructions on how to install, configure and generate a Aruba ClearPass As Built report.
 
 ## :floppy_disk: Supported Versions
-<!-- ********** Update supported ClearPass versions ********** -->
-The Aruba ClearPass As Built Report supports the following ClearPass versions;
+The Aruba ClearPass As Built Report supports the following ClearPass versions 6.10.x, 6.11.x, 6.12.x
 
 ### PowerShell
 This report is compatible with the following PowerShell versions;
 
-<!-- ********** Update supported PowerShell versions ********** -->
 | Windows PowerShell 5.1 |     PowerShell 7    |
 |:----------------------:|:--------------------:|
 |   :white_check_mark:   | :white_check_mark: |
 ## :wrench: System Requirements
-<!-- ********** Update system requirements ********** -->
 PowerShell 5.1 or PowerShell 7, and the following PowerShell modules are required for generating a Aruba ClearPass As Built Report.
 
 - [AsBuiltReport.Aruba.ClearPass Module](https://www.powershellgallery.com/packages/AsBuiltReport.Aruba.ClearPass/)
+- [PowerArubaCP Module](https://www.powershellgallery.com/packages/PowerArubaCP/)
 
 ### :closed_lock_with_key: Required Privileges
-<!-- ********** Define required privileges ********** -->
-<!-- ********** Try to follow best practices to define least privileges ********** -->
+You need to have an API Token (can be Read Only)
+
+Go on WebGUI of your ClearPass, on Guest Modules
+generate a API Client but you don't need to store the Client Secret
+
+On `API Clients List`, select the your client
+![](https://raw.githubusercontent.com/PowerAruba/PowerArubaCP/master/Medias/CPPM_Generate_Access_Token.PNG)  
+
+Click on `Generate Access Token`
+
+![](https://raw.githubusercontent.com/PowerAruba/PowerArubaCP/master/Medias/CPPM_Get_Token.PNG)  
+And kept the token (for example : 70680f1d19f86110800d5d5cb4414fbde7be12ae)
 
 ## :package: Module Installation
 
 ### PowerShell
-<!-- ********** Add installation for any additional PowerShell module(s) ********** -->
 ```powershell
-install-module AsBuiltReport.Aruba.ClearPass
+Install-Module PowerArubaCP
+Install-Module AsBuiltReport.Aruba.ClearPass
 ```
 
 ### GitHub
@@ -118,23 +132,50 @@ The **Report** schema provides configuration of the Aruba ClearPass report infor
 ### Options
 The **Options** schema allows certain options within the report to be toggled on or off.
 
-<!-- ********** Add/Remove the number of InfoLevels as required ********** -->
+There is not yet Options.
+
 ### InfoLevel
 The **InfoLevel** schema allows configuration of each section of the report at a granular level. The following sections can be set.
 
-There are 6 levels (0-5) of detail granularity for each section as follows;
+There are 3 levels (0-2) of detail granularity for each section as follows;
 
 | Setting | InfoLevel         | Description                                                                                                                                |
 |:-------:|-------------------|--------------------------------------------------------------------------------------------------------------------------------------------|
 |    0    | Disabled          | Does not collect or display any information                                                                                                |
 |    1    | Enabled / Summary | Provides summarised information for a collection of objects                                                                                |
 |    2    | Adv Summary       | Provides condensed, detailed information for a collection of objects                                                                       |
-|    3    | Detailed          | Provides detailed information for individual objects                                                                                       |
-|    4    | Adv Detailed      | Provides detailed information for individual objects, as well as information for associated objects                                        |
-|    5    | Comprehensive     | Provides comprehensive information for individual objects, such as advanced configuration settings                                         |
+
+The table below outlines the default and maximum InfoLevel settings for each *ClearPass* section.
+
+| Sub-Schema | Default Settings | Maximum Settings |
+|:----------:|------------------|------------------|
+| System     | 1                | 1                |
+| Licence    | 2                | 2                |
+| Authentication | 2            | 2                |
+| Certificate | 1               | 1                |
+| Service    | 2                | 2                |
+| NetworkDevice  | 1            | 1                |
 
 ### Healthcheck
 The **Healthcheck** schema is used to toggle health checks on or off.
 
+Health checks are yet to be developed.
+
 ## :computer: Examples
-<!-- ********** Add some examples. Use other AsBuiltReport modules as a guide. ********** -->
+There are a few examples listed below on running the AsBuiltReport script against a ClearPass. Refer to the README.md file in the main AsBuiltReport project repository for more examples.
+
+```powershell
+# Generate a Aruba ClearPass As Built Report for ClearPass clearpass.arubademo.net using specified token. Export report to HTML & DOCX formats. Use default report style. Append timestamp to report filename. Save reports to 'C:\Users\PowerArubaCP\Documents'
+PS C:\> New-AsBuiltReport -Report Aruba.ClearPass -Target clearpass.arubademo.net -token XXXXXXX -Format Html,Word -OutputFolderPath 'C:\Users\PowerArubaCP\Documents' -Timestamp
+
+# Generate a Aruba ClearPass  As Built Report for ClearPass clearpass.arubademo.net using specified token and report configuration file. Export report to Text, HTML & DOCX formats. Use default report style. Save reports to 'C:\Users\PowerArubaCP\Documents'. Display verbose messages to the console.
+PS C:\>  New-AsBuiltReport -Report Aruba.ClearPass -Target clearpass.arubademo.net -token XXXXXXX -Format Text,Html,Word -OutputFolderPath 'C:\Users\PowerArubaCP\Documents' -ReportConfigFilePath 'C:\Users\Jon\AsBuiltReport\AsBuiltReport.Aruba.ClearPass.json' -Verbose
+
+# Generate a Aruba ClearPass As Built Report for ClearPass clearpass.arubademo.net using specified token. Export report to HTML & Text formats. Use default report style. Highlight environment issues within the report. Save reports to 'C:\Users\PowerArubaCP\Documents'.
+PS C:\> $Creds = Get-Credential
+PS C:\>  New-AsBuiltReport -Report Aruba.ClearPass -Target clearpass.arubademo.net -token XXXXXXX -Format Html,Text -OutputFolderPath 'C:\Users\PowerArubaCP\Documents' -EnableHealthCheck
+
+# Generate a Aruba ClearPass As Built Report for ClearPass clearpass.arubademo.net using specified token. Export report to HTML & DOCX formats. Use default report style. Reports are saved to the user profile folder by default. Attach and send reports via e-mail.
+PS C:\>  New-AsBuiltReport -Report Aruba.ClearPass -Target clearpass.arubademo.net -token XXXXXXX -Format Html,Word -OutputFolderPath 'C:\Users\PowerArubaCP\Documents' -SendEmail
+```
+
