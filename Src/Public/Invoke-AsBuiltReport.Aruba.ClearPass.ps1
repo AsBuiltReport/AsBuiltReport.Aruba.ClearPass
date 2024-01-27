@@ -7,18 +7,18 @@ function Invoke-AsBuiltReport.Aruba.ClearPass {
     .NOTES
         Version:        0.1.0
         Author:         Alexis La Goutte
-        Twitter:
-        Github:
+        Twitter:        @alagoutte
+        Github:         alagoutte
         Credits:        Iain Brighton (@iainbrighton) - PScribo module
 
     .LINK
         https://github.com/AsBuiltReport/AsBuiltReport.Aruba.ClearPass
     #>
 
-	# Do not remove or add to these parameters
+    # Do not remove or add to these parameters
     param (
         [String[]] $Target,
-        [PSCredential] $Credential
+        [string] $Token
     )
 
     Write-PScriboMessage -Plugin "Module" -Message "Please refer to the AsBuiltReport.Aruba.ClearPass GitHub website for more detailed information about this project."
@@ -46,13 +46,48 @@ function Invoke-AsBuiltReport.Aruba.ClearPass {
     # Used to set values to TitleCase where required
     $TextInfo = (Get-Culture).TextInfo
 
-	# Update/rename the $System variable and build out your code within the ForEach loop. The ForEach loop enables AsBuiltReport to generate an as built configuration against multiple defined targets.
+    # Update/rename the $System variable and build out your code within the ForEach loop. The ForEach loop enables AsBuiltReport to generate an as built configuration against multiple defined targets.
 
     #region foreach loop
     foreach ($System in $Target) {
 
+        try {
+            #Connection to ClearPass (TODO: Add Parameter for Certificate Check and Port)
+            Connect-ArubaCP -Server $System -token $token -SkipCertificateCheck | Out-Null
 
+            #Get Model
+            $name = (Get-ArubaCPServerConfiguration | Where-Object { $_.is_publisher -eq "True" }).name
+            Write-PScriboMessage "Connect to $System : $name"
 
-	}
-	#endregion foreach loop
+            Section -Style Heading1 "Implementation Report $name" {
+                Paragraph "The following section provides a summary of the implemented components on the Aruba ClearPass infrastructure."
+                BlankLine
+                if ($InfoLevel.System.PSObject.Properties.Value -ne 0) {
+                    Get-AbrCPPMSystem
+                }
+                if ($InfoLevel.License.PSObject.Properties.Value -ne 0) {
+                    Get-AbrCPPMLicense
+                }
+                if ($InfoLevel.Authentication.PSObject.Properties.Value -ne 0) {
+                    Get-AbrCPPMAuthentication
+                }
+                if ($InfoLevel.Certificate.PSObject.Properties.Value -ne 0) {
+                    Get-AbrCPPMCertificate
+                }
+                if ($InfoLevel.Service.PSObject.Properties.Value -ne 0) {
+                    Get-AbrCPPMService
+                }
+                if ($InfoLevel.NetworkDevice.PSObject.Properties.Value -ne 0) {
+                    Get-AbrCPPMNetworkDevice
+                }
+            }
+        }
+        catch {
+            Write-PScriboMessage -IsWarning $_.Exception.Message
+        }
+
+        #Disconnect
+        Disconnect-ArubaCP -Confirm:$false
+    }
+    #endregion foreach loop
 }
