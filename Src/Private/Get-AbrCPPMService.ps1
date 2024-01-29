@@ -31,8 +31,8 @@ function Get-AbrCPPMService {
             $service = Get-ArubaCPService -limit 1000 | Sort-Object order_no
 
             if ( $defaultArubaCPConnection.version -gt [version]"6.11.0") {
-                $enf_policy = (Invoke-ArubaCPRestMethod "api/enforcement-policy" -limit 1000)._embedded.items
-                $enf_profile = (Invoke-ArubaCPRestMethod "api/enforcement-profile" -limit 1000)._embedded.items
+                $enf_policy = Get-ArubaCPEnforcementPolicy -limit 1000
+                $enf_profile = Get-ArubaCPEnforcementProfile -limit 1000
             }
 
             if ($service -and $InfoLevel.Service -ge 1) {
