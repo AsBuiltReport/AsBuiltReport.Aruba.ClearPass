@@ -58,7 +58,7 @@ RequiredModules = @(
     },
     @{
         ModuleName = 'PowerArubaCP';
-        ModuleVersion = '0.6.0'
+        ModuleVersion = '0.7.0'
     }
 )
 
