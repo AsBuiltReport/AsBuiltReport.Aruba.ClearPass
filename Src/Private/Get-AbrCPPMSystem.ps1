@@ -57,30 +57,33 @@ function Get-AbrCPPMSystem {
 
                 $OutObj | Table @TableParams
 
-                Paragraph "The following section details Patches settings configured on ClearPass."
-                BlankLine
+                #Check if there is some Patchs installed like 6.x.0 release :-) (never use in prod !)
+                if ($server_version.installed_patches) {
+                    Paragraph "The following section details Patches settings configured on ClearPass."
+                    BlankLine
 
-                $OutObj = @()
-                foreach ($patches in $server_version.installed_patches) {
-                    $OutObj += [pscustomobject]@{
-                        "Name" = $patches.name
-                        #"Description" = $patches.description
-                        "Date" = $patches.installed
+                    $OutObj = @()
+                    foreach ($patches in $server_version.installed_patches) {
+                        $OutObj += [pscustomobject]@{
+                            "Name" = $patches.name
+                            #"Description" = $patches.description
+                            "Date" = $patches.installed
+                        }
                     }
-                }
 
-                $TableParams = @{
-                    Name         = "Patches"
-                    List         = $false
-                    ColumnWidths = 50, 50
-                    #ColumnWidths = 25, 50, 25
-                }
+                    $TableParams = @{
+                        Name         = "Patches"
+                        List         = $false
+                        ColumnWidths = 50, 50
+                        #ColumnWidths = 25, 50, 25
+                    }
 
-                if ($Report.ShowTableCaptions) {
-                    $TableParams['Caption'] = "- $($TableParams.Name)"
-                }
+                    if ($Report.ShowTableCaptions) {
+                        $TableParams['Caption'] = "- $($TableParams.Name)"
+                    }
 
-                $OutObj | Table @TableParams
+                    $OutObj | Table @TableParams
+                }
             }
         }
 
