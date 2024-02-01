@@ -37,17 +37,17 @@ function Get-AbrCPPMSystem {
                 $OutObj = @()
                 $app = $version.app_major_version + "." + $version.app_minor_version + "." + $version.app_service_release
                 $OutObj = [pscustomobject]@{
-                    "Version" = $app
-                    "Build" = $version.app_build_number
+                    "Version"          = $app
+                    "Build"            = $version.app_build_number
                     "Hardware Version" = $version.hardware_version
-                    "FIPS" = $version.fips_enabled
-                    "Evaluation" = $version.eval_license
-                    "Cloud" = $version.cloud_mode
+                    "FIPS"             = $version.fips_enabled
+                    "Evaluation"       = $version.eval_license
+                    "Cloud"            = $version.cloud_mode
                 }
 
                 $TableParams = @{
-                    Name = "Version"
-                    List = $false
+                    Name         = "Version"
+                    List         = $false
                     ColumnWidths = 20, 16, 16, 16, 16, 16
                 }
 
@@ -70,8 +70,8 @@ function Get-AbrCPPMSystem {
                 }
 
                 $TableParams = @{
-                    Name = "Patches"
-                    List = $false
+                    Name         = "Patches"
+                    List         = $false
                     ColumnWidths = 50, 50
                     #ColumnWidths = 25, 50, 25
                 }
@@ -92,19 +92,19 @@ function Get-AbrCPPMSystem {
                 $OutObj = @()
                 foreach ($conf in $configuration) {
                     $OutObj += [pscustomobject]@{
-                        "Name" = $conf.name
-                        "DNS Name" = $conf.server_dns_name
+                        "Name"              = $conf.name
+                        "DNS Name"          = $conf.server_dns_name
                         #"FQDN" = $conf.fqdn
-                        "MGMT IP" = $conf.management_ip
-                        "DATA IP" = $conf.server_ip
-                        "Publisher" = $conf.is_publisher
+                        "MGMT IP"           = $conf.management_ip
+                        "DATA IP"           = $conf.server_ip
+                        "Publisher"         = $conf.is_publisher
                         "Insight (Primary)" = "$($conf.is_insight_enabled) ($($conf.is_insight_primary))"
                     }
                 }
 
                 $TableParams = @{
-                    Name = "Server Configuration"
-                    List = $false
+                    Name         = "Server Configuration"
+                    List         = $false
                     ColumnWidths = 20, 20, 16, 16, 12, 16
                 }
 
