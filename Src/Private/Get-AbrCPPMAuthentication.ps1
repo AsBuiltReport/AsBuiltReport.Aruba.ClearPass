@@ -239,9 +239,15 @@ function Get-AbrCPPMAuthentication {
                                         foreach ($cpascd in $s.cppm_primary_auth_source_connection_details.PSObject.Properties) {
                                             #Only display when there is a value...
                                             if ($cpascd.value) {
+                                                $value = $cpascd.value
+                                                if ($Options.HidePassword) {
+                                                    if ($cpascd.name.contains("password") ) {
+                                                        $value = "ANONYMISED"
+                                                    }
+                                                }
                                                 $OutObj += [pscustomobject]@{
                                                     "Name"  = $cpascd.name
-                                                    "Value" = $cpascd.value
+                                                    "Value" = $value
                                                 }
                                             }
 
