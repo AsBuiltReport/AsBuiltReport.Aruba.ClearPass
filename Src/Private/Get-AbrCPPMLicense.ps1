@@ -97,10 +97,19 @@ function Get-AbrCPPMLicense {
                             Section -Style Heading3 "Application License: $($lic.product_name) $($lic.product_id)" {
                                 $OutObj = @()
 
+                                if ($Options.HideLicenseKey) {
+                                    $key = $lic.license_key -replace '(?s)-----BEGIN .*? KEY-----.*?-----END .*? KEY-----', '-----BEGIN [ANONYMISED] KEY-----'
+
+                                    #$key = $lic.license_key -replace '-----BEGIN .*? KEY-----', '-----BEGIN [ANONYMISED] KEY-----'
+                                }
+                                else {
+                                    $key = $lic.license_key
+                                }
+
                                 $OutObj = [pscustomobject]@{
                                     "Product Id"        = $lic.product_id
                                     "Product Name"      = $lic.product_name
-                                    "Licence Key"       = $lic.license_key
+                                    "Licence Key"       = $key
                                     "Licence Type"      = $lic.license_type
                                     "User Count"        = $lic.user_count
                                     "Duration"          = "$($lic.duration) $($lic.duration_units)"
