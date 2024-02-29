@@ -240,10 +240,10 @@ function Get-AbrCPPMAuthentication {
                                             #Only display when there is a value...
                                             if ($cpascd.value) {
                                                 $value = $cpascd.value
-                                                if ($Options.HidePassword) {
-                                                    if ($cpascd.name.contains("password") ) {
-                                                        $value = "ANONYMISED"
-                                                    }
+                                                if (($Options.HidePassword) -and ($cpascd.name.contains("password"))) {
+                                                    $value = "Anonymised"
+                                                } else {
+                                                    $value = $cpascd.value
                                                 }
                                                 $OutObj += [pscustomobject]@{
                                                     "Name"  = $cpascd.name

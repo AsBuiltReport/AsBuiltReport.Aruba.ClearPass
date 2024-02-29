@@ -98,9 +98,7 @@ function Get-AbrCPPMLicense {
                                 $OutObj = @()
 
                                 if ($Options.HideLicenseKey) {
-                                    $key = $lic.license_key -replace '(?s)-----BEGIN .*? KEY-----.*?-----END .*? KEY-----', '-----BEGIN [ANONYMISED] KEY-----'
-
-                                    #$key = $lic.license_key -replace '-----BEGIN .*? KEY-----', '-----BEGIN [ANONYMISED] KEY-----'
+                                    $key = $lic.license_key -replace '(?s)-----BEGIN .*? KEY-----.*?-----END .*? KEY-----', '-----BEGIN [Anonymised] KEY-----'
                                 }
                                 else {
                                     $key = $lic.license_key
