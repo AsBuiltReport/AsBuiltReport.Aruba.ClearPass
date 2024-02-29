@@ -39,16 +39,16 @@ function Get-AbrCPPMLicense {
                     $OutObj = @()
                     foreach ($item in $summary) {
                         $OutObj += [pscustomobject]@{
-                            "Type" = $item.license_type
-                            "Count" = $item.licensed_count
-                            "Used" = $item.used_count
+                            "Type"    = $item.license_type
+                            "Count"   = $item.licensed_count
+                            "Used"    = $item.used_count
                             "Updated" = $item.updated_at
                         }
                     }
 
                     $TableParams = @{
-                        Name = "License Summary"
-                        List = $false
+                        Name         = "License Summary"
+                        List         = $false
                         ColumnWidths = 25, 25, 25, 25
                     }
 
@@ -69,17 +69,17 @@ function Get-AbrCPPMLicense {
                     $OutObj = @()
                     foreach ($lic in $app_license) {
                         $OutObj += [pscustomobject]@{
-                            "Product Name" = $lic.product_name
-                            "Licence Type" = $lic.license_type
-                            "User Count" = $lic.user_count
-                            "Licence Added " = $lic.license_added_on
+                            "Product Name"      = $lic.product_name
+                            "Licence Type"      = $lic.license_type
+                            "User Count"        = $lic.user_count
+                            "Licence Added "    = $lic.license_added_on
                             "Activation Status" = $lic.activation_status
                         }
                     }
 
                     $TableParams = @{
-                        Name = "Application License Summary"
-                        List = $false
+                        Name         = "Application License Summary"
+                        List         = $false
                         ColumnWidths = 20, 20, 15, 25, 20
                     }
 
@@ -97,20 +97,27 @@ function Get-AbrCPPMLicense {
                             Section -Style Heading3 "Application License: $($lic.product_name) $($lic.product_id)" {
                                 $OutObj = @()
 
+                                if ($Options.HideLicenseKey) {
+                                    $key = $lic.license_key -replace '(?s)-----BEGIN .*? KEY-----.*?-----END .*? KEY-----', '-----BEGIN [Anonymised] KEY-----'
+                                }
+                                else {
+                                    $key = $lic.license_key
+                                }
+
                                 $OutObj = [pscustomobject]@{
-                                    "Product Id" = $lic.product_id
-                                    "Product Name" = $lic.product_name
-                                    "Licence Key" = $lic.license_key
-                                    "Licence Type" = $lic.license_type
-                                    "User Count" = $lic.user_count
-                                    "Duration" = "$($lic.duration) $($lic.duration_units)"
-                                    "Licence Added " = $lic.license_added_on
+                                    "Product Id"        = $lic.product_id
+                                    "Product Name"      = $lic.product_name
+                                    "Licence Key"       = $key
+                                    "Licence Type"      = $lic.license_type
+                                    "User Count"        = $lic.user_count
+                                    "Duration"          = "$($lic.duration) $($lic.duration_units)"
+                                    "Licence Added "    = $lic.license_added_on
                                     "Activation Status" = $lic.activation_status
                                 }
 
                                 $TableParams = @{
-                                    Name = "Application License: $($lic.product_name) $($lic.product_id)"
-                                    List = $true
+                                    Name         = "Application License: $($lic.product_name) $($lic.product_id)"
+                                    List         = $true
                                     ColumnWidths = 20, 80
                                 }
 

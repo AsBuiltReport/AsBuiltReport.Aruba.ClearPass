@@ -132,7 +132,10 @@ The **Report** schema provides configuration of the Aruba ClearPass report infor
 ### Options
 The **Options** schema allows certain options within the report to be toggled on or off.
 
-There is not yet Options.
+| Sub-Schema      | Setting      | Default | Description |
+|-----------------|--------------|---------|-------------|
+| HideLicenseKey | Licence Key | false | Hide License key value on report
+| HidePassword | Hide Password | false | Hide Password on Authentication chapiter (bind...)
 
 ### InfoLevel
 The **InfoLevel** schema allows configuration of each section of the report at a granular level. The following sections can be set.
