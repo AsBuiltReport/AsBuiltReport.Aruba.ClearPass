@@ -33,6 +33,8 @@ function Get-AbrCPPMService {
             if ( $defaultArubaCPConnection.version -gt [version]"6.11.0") {
                 $enf_policy = Get-ArubaCPEnforcementPolicy -limit 1000
                 $enf_profile = Get-ArubaCPEnforcementProfile -limit 1000
+                $role = Get-ArubaCPRole -limit 1000
+                $role_mapping_policy = (Invoke-ArubaCPRestMethod api/role-mapping -limit 1000)._embedded.items
             }
 
             if ($service -and $InfoLevel.Service -ge 1) {
@@ -401,6 +403,133 @@ function Get-AbrCPPMService {
                 }
 
             }
+
+            if ($role -and $InfoLevel.service -ge 1) {
+                Section -Style Heading3 'Role' {
+                    Paragraph "The following section details Role configured on ClearPass."
+                    BlankLine
+
+                    $OutObj = @()
+                    foreach ($rl in $role) {
+                        $OutObj += [pscustomobject]@{
+                            "Id"          = $rl.id
+                            "Name"        = $rl.name
+                            "Description" = $rl.description
+                            "Ref"         = @($role_mapping_policy.rules | Where-Object { $_.role_name -eq $rl.name }).count
+                        }
+                    }
+
+                    $TableParams = @{
+                        Name         = "Role"
+                        List         = $false
+                        ColumnWidths = 7, 30, 56, 7
+                    }
+
+                    if ($Report.ShowTableCaptions) {
+                        $TableParams['Caption'] = "- $($TableParams.Name)"
+                    }
+
+                    $OutObj | Table @TableParams
+
+                }
+            }
+
+            if ($role_mapping_policy -and $InfoLevel.service -ge 1) {
+                Section -Style Heading3 'Role Mapping Policy' {
+                    Paragraph "The following section details Role Mapping Policy configured on ClearPass."
+                    BlankLine
+
+                    $OutObj = @()
+                    foreach ($role_mapping in $role_mapping_policy) {
+                        $OutObj += [pscustomobject]@{
+                            "Id"          = $role_mapping.id
+                            "Name"        = $role_mapping.name
+                            "Description" = $role_mapping.description
+                            "Default"     = $role_mapping.default_role_name
+                            "Rule Algo"   = $role_mapping.rule_combine_algo
+                            "Rules Count" = @($role_mapping.rules).count
+                            "Ref"         = @($service | Where-Object { $_.role_mapping_policy -eq $role_mapping.name }).count
+                        }
+                    }
+
+                    $TableParams = @{
+                        Name         = "Role Mapping Policy"
+                        List         = $false
+                        ColumnWidths = 7, 30, 14, 15, 20, 7, 7
+                    }
+
+                    if ($Report.ShowTableCaptions) {
+                        $TableParams['Caption'] = "- $($TableParams.Name)"
+                    }
+
+                    $OutObj | Table @TableParams
+
+                    if ($InfoLevel.service -ge 2) {
+
+                        Paragraph "The following section details Role Mapping Policy configured on ClearPass."
+                        BlankLine
+                        foreach ($role_mapping in $role_mapping_policy) {
+                            Section -Style Heading3 "Role Mapping Policy: $($role_mapping.name)" {
+                                $OutObj = @()
+
+                                $OutObj = [pscustomobject]@{
+                                    "Id"                = $role_mapping.id
+                                    "Name"              = $role_mapping.name
+                                    "Description"       = $role_mapping.description
+                                    "Default Role Name" = $role_mapping.default_role_name
+                                    "Rule Algo"         = $role_mapping.rule_combine_algo
+                                }
+
+                                $TableParams = @{
+                                    Name         = "Role Mapping Policy: $($role_mapping.name)"
+                                    List         = $true
+                                    ColumnWidths = 20, 80
+                                }
+
+                                if ($Report.ShowTableCaptions) {
+                                    $TableParams['Caption'] = "- $($TableParams.Name)"
+                                }
+
+                                $OutObj | Table @TableParams
+
+                                #Rules Conditions
+                                if ($role_mapping.rules) {
+                                    $OutObj = @()
+                                    foreach ($rule in $role_mapping.rules) {
+                                        $conditions = ""
+                                        foreach ($condition in $rule.condition) {
+                                            if ($conditions) {
+                                                $conditions += " $($rule.match_type) "
+                                            }
+                                            $conditions += "($($condition.name) $($condition.oper) $($condition.value))"
+                                        }
+                                        $OutObj += [pscustomobject]@{
+                                            "Role Name" = $rule.role_name -join ", "
+                                            "Condition" = $conditions
+
+                                        }
+                                    }
+
+                                    $TableParams = @{
+                                        Name         = "Rules : $($role_mapping.name)"
+                                        List         = $false
+                                        ColumnWidths = 30, 70
+                                    }
+
+                                    if ($Report.ShowTableCaptions) {
+                                        $TableParams['Caption'] = "- $($TableParams.Name)"
+                                    }
+
+                                    $OutObj | Table @TableParams
+                                }
+                            }
+                        }
+                    }
+                }
+
+            }
+
+
         }
 
     }
