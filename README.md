@@ -1,15 +1,15 @@
 <!-- ********** DO NOT EDIT THESE LINKS ********** -->
 <p align="center">
-    <a href="https://www.asbuiltreport.com/" alt="AsBuiltReport"></a>
-            <img src='https://github.com/AsBuiltReport.png' width="8%" height="8%" /></a>
+    <a href="https://www.asbuiltreport.com/">
+        <img src="https://raw.githubusercontent.com/AsBuiltReport/.github/main/assets/repo-banners/AsBuiltReport.Aruba.ClearPass.png" alt="AsBuiltReport.Aruba.ClearPass" width="880"></a>
 </p>
 <p align="center">
     <a href="https://www.powershellgallery.com/packages/AsBuiltReport.Aruba.ClearPass/" alt="PowerShell Gallery Version">
-        <img src="https://img.shields.io/powershellgallery/v/AsBuiltReport.Aruba.ClearPass.svg" /></a>
+        <img src="https://img.shields.io/powershellgallery/v/AsBuiltReport.Aruba.ClearPass.svg?color=1F5FD0" /></a>
     <a href="https://www.powershellgallery.com/packages/AsBuiltReport.Aruba.ClearPass/" alt="PS Gallery Downloads">
-        <img src="https://img.shields.io/powershellgallery/dt/AsBuiltReport.Aruba.ClearPass.svg" /></a>
+        <img src="https://img.shields.io/powershellgallery/dt/AsBuiltReport.Aruba.ClearPass.svg?color=012456" /></a>
     <a href="https://www.powershellgallery.com/packages/AsBuiltReport.Aruba.ClearPass/" alt="PS Platform">
-        <img src="https://img.shields.io/powershellgallery/p/AsBuiltReport.Aruba.ClearPass.svg" /></a>
+        <img src="https://img.shields.io/powershellgallery/p/AsBuiltReport.Aruba.ClearPass.svg?color=FFD02B" /></a>
 </p>
 <p align="center">
     <a href="https://github.com/AsBuiltReport/AsBuiltReport.Aruba.ClearPass/graphs/commit-activity" alt="GitHub Last Commit">
@@ -17,19 +17,13 @@
     <a href="https://raw.githubusercontent.com/AsBuiltReport/AsBuiltReport.Aruba.ClearPass/master/LICENSE" alt="GitHub License">
         <img src="https://img.shields.io/github/license/AsBuiltReport/AsBuiltReport.Aruba.ClearPass.svg" /></a>
     <a href="https://github.com/AsBuiltReport/AsBuiltReport.Aruba.ClearPass/graphs/contributors" alt="GitHub Contributors">
-        <img src="https://img.shields.io/github/contributors/AsBuiltReport/AsBuiltReport.Aruba.ClearPass.svg"/></a>
-</p>
-<p align="center">
-    <a href="https://twitter.com/AsBuiltReport" alt="Twitter">
-            <img src="https://img.shields.io/twitter/follow/AsBuiltReport.svg?style=social"/></a>
+        <img src="https://img.shields.io/github/contributors/AsBuiltReport/AsBuiltReport.Aruba.ClearPass.svg?color=012456"/></a>
 </p>
 
 <p align="center">
     <a href='https://ko-fi.com/B0B7DDGZ7' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://cdn.ko-fi.com/cdn/kofi1.png?v=3' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
 </p>
 <!-- ********** DO NOT EDIT THESE LINKS ********** -->
-
-# Aruba ClearPass As Built Report
 
 
 Aruba ClearPass As Built Report is a PowerShell module which works in conjunction with [AsBuiltReport.Core](https://github.com/AsBuiltReport/AsBuiltReport.Core).
@@ -38,7 +32,7 @@ Aruba ClearPass As Built Report is a PowerShell module which works in conjunctio
 
 Please refer to the AsBuiltReport [website](https://www.asbuiltreport.com) for more detailed information about this project.
 
-# :books: Sample Reports
+# <img src="https://raw.githubusercontent.com/AsBuiltReport/.github/main/assets/section-icons/sample-reports.svg" alt="" width="28" height="28" align="top"> Sample Reports
 
 ## Sample Report
 
@@ -46,10 +40,10 @@ Sample Aruba ClearPass As Built report HTML file: [Sample Aruba ClearPass As-Bui
 
 Sample Aruba ClearPass As Built report Word file: [Sample Aruba ClearPass As-Built Report.docx](https://raw.githubusercontent.com/AsBuiltReport/AsBuiltReport.Aruba.ClearPass/dev/Samples/Aruba%20ClearPass%20As%20Built%20Report.docx)
 
-# :beginner: Getting Started
+# <img src="https://raw.githubusercontent.com/AsBuiltReport/.github/main/assets/section-icons/getting-started.svg" alt="" width="28" height="28" align="top"> Getting Started
 Below are the instructions on how to install, configure and generate a Aruba ClearPass As Built report.
 
-## :floppy_disk: Supported Versions
+## <img src="https://raw.githubusercontent.com/AsBuiltReport/.github/main/assets/section-icons/supported-versions.svg" alt="" width="24" height="24" align="top"> Supported Versions
 The Aruba ClearPass As Built Report supports the following ClearPass versions 6.10.x, 6.11.x, 6.12.x
 
 ### PowerShell
@@ -58,13 +52,13 @@ This report is compatible with the following PowerShell versions;
 | Windows PowerShell 5.1 |     PowerShell 7    |
 |:----------------------:|:--------------------:|
 |   :white_check_mark:   | :white_check_mark: |
-## :wrench: System Requirements
+## <img src="https://raw.githubusercontent.com/AsBuiltReport/.github/main/assets/section-icons/system-requirements.svg" alt="" width="24" height="24" align="top"> System Requirements
 PowerShell 5.1 or PowerShell 7, and the following PowerShell modules are required for generating a Aruba ClearPass As Built Report.
 
 - [AsBuiltReport.Aruba.ClearPass Module](https://www.powershellgallery.com/packages/AsBuiltReport.Aruba.ClearPass/)
 - [PowerArubaCP Module](https://www.powershellgallery.com/packages/PowerArubaCP/)
 
-### :closed_lock_with_key: Required Privileges
+### <img src="https://raw.githubusercontent.com/AsBuiltReport/.github/main/assets/section-icons/required-privileges.svg" alt="" width="20" height="20" align="top"> Required Privileges
 You need to have an API Token (can be Read Only)
 
 Go on WebGUI of your ClearPass, on Guest Modules
@@ -78,7 +72,7 @@ Click on `Generate Access Token`
 ![](https://raw.githubusercontent.com/PowerAruba/PowerArubaCP/master/Medias/CPPM_Get_Token.PNG)  
 And kept the token (for example : 70680f1d19f86110800d5d5cb4414fbde7be12ae)
 
-## :package: Module Installation
+## <img src="https://raw.githubusercontent.com/AsBuiltReport/.github/main/assets/section-icons/module-installation.svg" alt="" width="24" height="24" align="top"> Module Installation
 
 ### PowerShell
 ```powershell
@@ -100,7 +94,7 @@ If you are unable to use the PowerShell Gallery, you can still install the modul
 
 _Note: You are not limited to installing the module to those example paths, you can add a new entry to the environment variable PSModulePath if you want to use another path._
 
-## :pencil2: Configuration
+## <img src="https://raw.githubusercontent.com/AsBuiltReport/.github/main/assets/section-icons/configuration.svg" alt="" width="24" height="24" align="top"> Configuration
 
 The Aruba ClearPass As Built Report utilises a JSON file to allow configuration of report information, options, detail and healthchecks.
 
@@ -164,7 +158,7 @@ The **Healthcheck** schema is used to toggle health checks on or off.
 
 Health checks are yet to be developed.
 
-## :computer: Examples
+## <img src="https://raw.githubusercontent.com/AsBuiltReport/.github/main/assets/section-icons/examples.svg" alt="" width="24" height="24" align="top"> Examples
 There are a few examples listed below on running the AsBuiltReport script against a ClearPass. Refer to the README.md file in the main AsBuiltReport project repository for more examples.
 
 ```powershell
